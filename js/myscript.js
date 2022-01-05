@@ -1,3 +1,4 @@
+//Часть 1
 /* Задание на урок:
 
 1) Создать переменную numberOfFilms и в неё поместить ответ от пользователя на вопрос:
@@ -21,32 +22,7 @@
 
 Проверить, чтобы все работало без ошибок в консоли */
 
-'use strict';
-
-let numberOfFilms = prompt('Сколько фильмов вы уже посмотрели?', 0);
-
-let personalMovieDB = {
-    count: numberOfFilms,
-    movies: {},
-    actors: {},
-    genres: [],
-    privat: false
-};
-
-/*
-let posledniiFilm1 = prompt('Один из последних просмотренных фильмов');
-let ocenkaFilma1 = prompt('На сколько оцените его?');
-let posledniiFilm2 = prompt('Один из последних просмотренных фильмов');
-let ocenkaFilma2 = prompt('На сколько оцените его?');
-
-personalMovieDB.movies={
-    [posledniiFilm1]: ocenkaFilma1,
-    [posledniiFilm2]: ocenkaFilma2,
-};
-
-console.log(personalMovieDB);
-*/
-
+//Часть 2
 /* Задание на урок:
 
 1) Автоматизировать вопросы пользователю про фильмы при помощи цикла
@@ -61,7 +37,44 @@ console.log(personalMovieDB);
 
 4) Потренироваться и переписать цикл еще двумя способами*/
 
-for (let i = personalMovieDB.count; i >= 1; i--) {
+//Часть 3
+/* Задание на урок:
+
+1) Первую часть задания повторить по уроку
+
+2) Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции
+false - выводит в консоль главный объект программы
+
+3) Создать функцию writeYourGenres в которой пользователь будет 3 раза отвечать на вопрос 
+"Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных
+genres
+
+P.S. Функции вызывать не обязательно*/
+
+'use strict';
+
+let numberOfFilms;
+
+function start() {
+    numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+
+    while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+        numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
+    }
+};
+
+start();
+
+let personalMovieDB = {
+    count: numberOfFilms,
+    movies: {},
+    actors: {},
+    genres: [],
+    privat: false
+};
+
+function rememberMyfilms() {
+    for (let i = 0; i < 2; i++) {
     
     let posledniiFilm = prompt('Один из последних просмотренных фильмов');
     let ocenkaFilma = prompt('На сколько оцените его?');
@@ -71,21 +84,15 @@ for (let i = personalMovieDB.count; i >= 1; i--) {
         console.log('Done');
     } else {
         console.log("Error");
-        i++
+        i--
     };
 }
+};
 
-/* Это я сам пытался сделать, сверху решение из видеоурока
-    if (posledniiFilm == "" || ocenkaFilma == "" || posledniiFilm.length > 50) {
-        alert('Введите данные!!! Название фильма не может содержать больше 50 символов');
-        posledniiFilm = prompt('Один из последних просмотренных фильмов');
-        ocenkaFilma = prompt('На сколько оцените его?');
-    } else {personalMovieDB.movies[posledniiFilm]=ocenkaFilma;}*/
+rememberMyfilms();
 
-
-console.log(personalMovieDB);
-
-if (personalMovieDB.count < 4) {
+function detectPersonalLevel() {
+    if (personalMovieDB.count < 4) {
     alert('Просмотрено довольно мало фильмов');
 } else if (personalMovieDB.count >= 4 && personalMovieDB.count < 10) {
     alert('Вы класический зритель');
@@ -93,4 +100,22 @@ if (personalMovieDB.count < 4) {
     alert('Вы киноман');
 } else {
     alert('Призошла ошибка')
+}
 };
+
+detectPersonalLevel()
+
+function showMyDB() {
+    if (personalMovieDB.privat === false) {console.log(personalMovieDB)}
+}
+
+showMyDB();
+
+function writeYourGenres() {
+    for(let i = 1; i <= 3; i++){
+        const loveGenres = prompt(`Ваш любимый жанр под номером ${i}`);
+         personalMovieDB.genres[i-1]=loveGenres; // Можно сразу значение переменной loveGenres вставить сюда, не использую саму переменную - это ускорит выполнение кода
+    }
+};
+
+writeYourGenres();
